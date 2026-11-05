@@ -49,14 +49,14 @@ body.touch[data-scr=play] #pad .m,body.touch:not([data-scr=play]) #pad .r{displa
 [data-a=a1]{border-color:#9dff6f!important;background:#16301e!important}[data-a=a2]{border-color:#6ff6ff!important}[data-a=a3]{border-color:#ffd84a!important}[data-a=a4]{border-color:#ff4fd8!important}
 @media (orientation:landscape) and (max-height:520px){
  #wrap{padding:0}
- canvas{width:min(calc(100vw - 184px - env(safe-area-inset-left) - env(safe-area-inset-right)),calc(100dvh*16/9));border-radius:0}
+ canvas{width:min(calc(100vw - 220px - env(safe-area-inset-left) - env(safe-area-inset-right)),calc(100dvh*16/9));border-radius:0}
  #pad{position:fixed;inset:0;max-width:none;margin:0;padding:6px max(4px,env(safe-area-inset-right)) 6px max(4px,env(safe-area-inset-left));justify-content:space-between;align-items:stretch;pointer-events:none;gap:0}
- #pad .g{pointer-events:auto;flex-direction:column;width:88px;align-items:center;justify-content:center}
- #pad .dp{grid-template-columns:40px 40px;grid-template-rows:56px 56px 56px;gap:4px;width:84px;justify-content:center;align-content:center;flex:0 0 auto;height:176px;align-self:center}#pad .dp .btn{width:100%;height:56px;font-size:16px;border-radius:10px}.dp i{display:none}
+ #pad .g{pointer-events:auto;flex-direction:column;width:112px;align-items:center;justify-content:center}
+ #pad .dp{grid-template-columns:56px 56px;grid-template-rows:56px 56px 56px;gap:4px;width:116px;justify-content:center;align-content:center;flex:0 0 auto;height:176px;align-self:center}#pad .dp .btn{width:100%;height:56px;font-size:16px;border-radius:10px}.dp i{display:none}
  .dp [data-a=u]{grid-area:1/1/2/3}.dp [data-a=l]{grid-area:2/1/3/2}.dp [data-a=r]{grid-area:2/2/3/3}.dp [data-a=d]{grid-area:3/1/4/3}
  .btn.ok{width:84px;height:64px}.btn.bk{width:84px;height:50px}
  .joyw{justify-content:flex-end!important;padding-bottom:10px}
- #joy{width:86px;height:86px}
+ #joy{width:100px;height:100px}
  .acts{grid-template-columns:84px;grid-template-rows:34px repeat(4,56px);gap:8px;justify-content:center}
  .acts [data-a=pause]{grid-area:1/1;justify-self:center}.acts [data-a=a4]{grid-area:2/1}.acts [data-a=a2]{grid-area:3/1}.acts [data-a=a3]{grid-area:4/1}.acts [data-a=a1]{grid-area:5/1}
  .acts .btn{width:84px;height:56px}
