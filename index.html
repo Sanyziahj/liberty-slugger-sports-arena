@@ -143,4 +143,69 @@ var SRC = (function () {
   new MutationObserver(function () { if (!prize.hidden) onShow(); }).observe(prize, { attributes: true, attributeFilter: ["hidden"] });
   window.__SR_STAMP = { stamp: stamp, show: onShow };
 })();
-</script></body></html>
+</script><style id="lup-css">
+body.touch{--lk:1;--lo:1}
+body.touch #wrap{justify-content:flex-end;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+body.touch #pad{margin-top:10px}
+body.touch #pad .r,body.touch #pad .dp,body.touch #pad .col{opacity:var(--lo)}
+body.touch .acts{grid-template-columns:calc(76px*var(--lk)) calc(92px*var(--lk));grid-template-rows:44px calc(66px*var(--lk)) calc(92px*var(--lk));align-items:center;justify-items:center}
+body.touch .acts .btn{width:calc(76px*var(--lk));height:calc(66px*var(--lk))}
+body.touch .acts .btn.st{width:64px;height:44px;font-size:16px}
+body.touch .acts [data-a=a1]{width:calc(92px*var(--lk));height:calc(92px*var(--lk));border-radius:50%;font-size:16px}
+body.touch .acts [data-a=a2]{width:calc(84px*var(--lk));height:calc(66px*var(--lk))}
+body.touch #joy{width:calc(156px*var(--lk));height:calc(156px*var(--lk))}
+.btn.lup-pop{animation:lupPop .28s ease}
+@keyframes lupPop{0%{transform:scale(1)}40%{transform:scale(1.14);box-shadow:0 0 16px 4px rgba(157,255,111,.7)}100%{transform:scale(1)}}
+body.touch.lup-lh[data-scr=play] #pad{flex-direction:row-reverse}
+#lup-gear{display:none}
+body.touch:not([data-scr=play]) #lup-gear{display:flex;width:64px;height:48px;font-size:22px;border-color:#4ff0ff}
+#lup-set{position:fixed;inset:0;z-index:20;display:none;background:rgba(3,2,10,.88);align-items:center;justify-content:center;font:800 12px system-ui,sans-serif;color:#c9d1e3}
+#lup-set.show{display:flex}
+#lup-set .box{background:#141a2e;border:2px solid #ffd84a;border-radius:16px;padding:12px 14px;text-align:center}
+#lup-set .r{display:flex;align-items:center;gap:6px;justify-content:center;margin:6px 0}
+#lup-set b{width:76px;text-align:right;letter-spacing:1px;color:#4ff0ff}
+#lup-set button{min-width:56px;min-height:44px;border-radius:12px;border:2px solid #3a3f55;background:#0d1124;color:#c9d1e3;font:800 13px system-ui,sans-serif;opacity:.6;transition:transform .12s,opacity .12s,box-shadow .12s}
+#lup-set button.sel{opacity:1;transform:scale(1.07);background:#ffd84a;color:#140a2e;border-color:#fff;box-shadow:0 0 16px 3px rgba(255,216,74,.7)}
+#lup-set .done{width:100%;margin-top:6px;opacity:1}
+@media (orientation:landscape) and (max-height:520px){
+ body.touch #wrap{padding-bottom:0;justify-content:center}
+ body.touch #pad{margin-top:0}
+ body.touch .acts{grid-template-columns:84px;grid-template-rows:44px repeat(3,50px) 72px;gap:6px}
+ body.touch .acts .btn{width:84px;height:50px}
+ body.touch .acts .btn.st{width:72px;height:44px}
+ body.touch .acts [data-a=a1]{width:84px;height:72px;border-radius:36px}
+ body.touch .acts [data-a=a2]{width:84px;height:50px}
+ body.touch #joy{width:calc(100px*var(--lk));height:calc(100px*var(--lk));max-width:110px;max-height:110px}
+ body.touch:not([data-scr=play]) #lup-gear{width:84px;height:44px}
+}
+</style>
+<script>
+(function(){
+var C={size:1,op:1,lh:false,vib:true};try{Object.assign(C,JSON.parse(localStorage.getItem("sr-controls-v1")||"{}"))}catch(e){}
+function buzz(ms){try{if(C.vib&&navigator.vibrate&&document.body.classList.contains("touch"))navigator.vibrate(ms)}catch(e){}}
+var pad=document.getElementById("pad");if(!pad)return;
+var col=pad.querySelector(".col");
+var gear=document.createElement("b");gear.id="lup-gear";gear.className="btn";gear.setAttribute("role","button");gear.setAttribute("aria-label","Control settings");gear.innerHTML="&#9881;";
+if(col)col.appendChild(gear);
+var set=document.createElement("div");set.id="lup-set";
+set.innerHTML='<div class="box"><div style="color:#ffd84a;letter-spacing:2px;margin-bottom:4px">PHONE CONTROLS</div>'+
+'<div class="r"><b>SIZE</b><button data-k="size" data-v="0.9">S</button><button data-k="size" data-v="1">M</button><button data-k="size" data-v="1.1">L</button></div>'+
+'<div class="r"><b>OPACITY</b><button data-k="op" data-v="0.55">55</button><button data-k="op" data-v="0.8">80</button><button data-k="op" data-v="1">100</button></div>'+
+'<div class="r"><b>HANDS</b><button data-k="lh" data-v="false">RIGHT</button><button data-k="lh" data-v="true">LEFT</button></div>'+
+'<div class="r"><b>VIBRATE</b><button data-k="vib" data-v="true">ON</button><button data-k="vib" data-v="false">OFF</button></div>'+
+'<button class="done sel" data-close>DONE</button></div>';
+document.body.appendChild(set);
+function paint(){var b=document.body;b.style.setProperty("--lk",C.size);b.style.setProperty("--lo",C.op);b.classList.toggle("lup-lh",!!C.lh);set.querySelectorAll("[data-k]").forEach(function(x){x.classList.toggle("sel",String(C[x.dataset.k])===x.dataset.v)})}
+paint();
+gear.addEventListener("pointerdown",function(e){e.preventDefault();e.stopPropagation();set.classList.add("show");paint()});
+set.addEventListener("pointerdown",function(e){e.preventDefault();e.stopPropagation();var t=e.target.closest("[data-k],[data-close]");if(!t)return;if(t.dataset.close!=null){set.classList.remove("show");return}var v=t.dataset.v;C[t.dataset.k]=v==="true"?true:v==="false"?false:Number(v);try{localStorage.setItem("sr-controls-v1",JSON.stringify(C))}catch(e){}paint();buzz(10)});
+pad.addEventListener("pointerdown",function(e){if(e.isTrusted&&e.target.closest&&e.target.closest(".btn"))buzz(10)},true);
+var a1=pad.querySelector("[data-a=a1]");
+if(a1&&window.MutationObserver){var last=a1.textContent;new MutationObserver(function(){if(a1.textContent!==last){last=a1.textContent;a1.classList.remove("lup-pop");void a1.offsetWidth;a1.classList.add("lup-pop")}}).observe(a1,{childList:true,characterData:true,subtree:true})}
+function away(){if(document.body.dataset.scr!=="play")return;var p=pad.querySelector("[data-a=pause]");if(!p)return;
+ p.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true,cancelable:true,pointerId:401,pointerType:"touch",isPrimary:true}));
+ setTimeout(function(){p.dispatchEvent(new PointerEvent("pointerup",{bubbles:true,cancelable:true,pointerId:401,pointerType:"touch",isPrimary:true}))},40)}
+document.addEventListener("visibilitychange",function(){if(document.hidden)away()});window.addEventListener("pagehide",away);
+})();
+</script>
+</body></html>
